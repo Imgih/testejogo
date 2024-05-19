@@ -1,28 +1,175 @@
+global.actionLibrary = 
+{
+	fraco: 
+	{
+		name : "Fraco",
+		description : "{0} attacks!",
+		subMenu : -1,
+		targetRequired: true,
+		targetEnemyByDefault : true,
+		targetAll : MODE.NEVER,
+		userAnimation: "attack",
+		effectSprite : sAttackBonk,
+		effectOnTarget : MODE.ALWAYS,
+		func : function(_user, _targets)
+		{
+			var _damage = ceil(_user.strength + random_range(- _user.strength * 0.25, _user.strength * 0.25 ));
+			BattleChangeHP(_targets[0], -_damage,0);
+		}
+	},
+	Normal: 
+	{
+		name : "Normal",
+		description : "{0} attacks!",
+		subMenu : -1,
+		mpCost: 10,
+		targetRequired: true,
+		targetEnemyByDefault : true,
+		targetAll : MODE.NEVER,
+		userAnimation: "attack",
+		effectSprite : sAttackBonk,
+		effectOnTarget : MODE.ALWAYS,
+		func : function(_user, _targets)
+		{
+			var _damage = ceil(_user.strength + random_range(- _user.strength * 0.50, _user.strength * 0.50));
+			BattleChangeHP(_targets[0], -_damage,0);
+		}
+	},
+	forte: 
+	{
+		name : "Forte",
+		description : "{0} ataca!",
+		subMenu : -1,
+		mpCost: 20,
+		targetRequired: true,
+		targetEnemyByDefault : true,
+		targetAll : MODE.NEVER,
+		userAnimation: "attack",
+		effectSprite : sAttackBonk,
+		effectOnTarget : MODE.ALWAYS,
+		func : function(_user, _targets)
+			{
+			var _damage = irandom_range(10,15);
+			 BattleChangeHP(_targets[0], -_damage);
+			}
+	},
+	ice:
+	{
+		name: "Ice",
+		description: "{0} casts Ice!",
+		subMenu: "Magic",
+		mpCost: 4,
+		targetRequired: true,
+		targetEnemyByDefault: true,
+		targetAll: MODE.VARIES,
+		userAnimation: "cast",
+		effectSprite: sAttackIce,
+		effectOnTarget: MODE.ALWAYS,
+		func: function(_user, _targets)
+		{
+			var _damage = irandom_range(10,15);
+			 BattleChangeHP(_targets[0], -_damage);
+		}
+	},
+	defense:
+	{
+		
+	    name: "Defender",
+	    description: "{0} se defende!",
+	    subMenu: -1,
+	    mpCost: 10,
+	    targetRequired: false,
+	    effectOnTarget: MODE.NEVER,
+	    userAnimation: "defend",
+	    effectSprite: sLuluDefend,
+	    func: function(_user, _targets) {
+	        _user.isDefending = true; // Define isDefending como verdadeira
+	        _user.sprite_index = _user.sprites.defend; // Atualiza a sprite para a sprite de defesa
+	    
+		}
+
+
+	},
+	regeneracao: {
+	    name: "Cura",
+	    description: "{0} recupera HP!",
+	    subMenu: -1,
+	    mpCost: 10, // Ou o custo de MP desejado
+	    targetRequired: false, // Não requer seleção de alvo
+	    targetEnemyByDefault: false, // Não é uma ação que visa inimigos
+	    targetAll: MODE.NEVER, // Não é uma ação que afeta todos os alvos
+	    userAnimation: "cast", // Animação do usuário
+	    effectSprite: sAttackCure, // Sprite de efeito, se desejar
+	    effectOnTarget: MODE.NEVER, // Não afeta o alvo diretamente
+	    func: function(_user, _targets) {
+	        // Calcula a quantidade de regeneração (10% a 25% da HP máxima)
+	        var regenPercent = random_range(0.1, 0.25);
+	        var regenAmount = ceil(_user.hpMax * regenPercent);
+	        // Adiciona a quantidade de regeneração à HP atual do usuário
+	        _user.hp += regenAmount;
+	        // Garante que a HP não exceda a HP máxima
+	        if (_user.hp > _user.hpMax) _user.hp = _user.hpMax;
+		}
+	},
+	regeneracaoboss: {
+	    name: "Cura",
+	    description: "{0} recupera HP!",
+	    subMenu: -1,
+	    mpCost: 10, // Ou o custo de MP desejado
+	    targetRequired: false, // Não requer seleção de alvo
+	    targetEnemyByDefault: false, // Não é uma ação que visa inimigos
+	    targetAll: MODE.NEVER, // Não é uma ação que afeta todos os alvos
+	    userAnimation: "cast", // Animação do usuário
+	    effectSprite: sAttackCure, // Sprite de efeito, se desejar
+	    effectOnTarget: MODE.NEVER, // Não afeta o alvo diretamente
+	    func: function(_user, _targets) {
+	        // Calcula a quantidade de regeneração (10% a 25% da HP máxima)
+			var regenPercent = random_range(0.05, 0.1);
+	        var regenAmount = ceil(_user.hpMax * regenPercent);
+	        // Adiciona a quantidade de regeneração à HP atual do usuário
+	        _user.hp += regenAmount;
+	        // Garante que a HP não exceda a HP máxima
+	        if (_user.hp > _user.hpMax) _user.hp = _user.hpMax;
+		}
+	}
+}
+
+
+
+enum MODE
+{
+	NEVER = 0,
+	ALWAYS = 1,
+	VARIES = 2
+}
+
 
 //Dados dos personagens, assim como a separação se suas sprites
 //personagens data
 global.party = 
 [
 	{
-		name: "Lulu",
-		hp: 89,
-		hpMax: 89,
-		mp: 10,
-		mpMax: 15,
-		strength: 6,
-		sprites : { idle: sLuluIdle, attack: sLuluAttack, defend: sLuluDefend, down: sLuluDown},
-		actions : []
-	}
+		name: "Noah",
+	    hp: 90,
+	    hpMax: 90,
+	    mp: 30,
+	    mpMax: 25,
+	    strength: 6,
+	    sprites: { idle: sLuluIdle, attack: sLuluAttack, defend: sLuluDefend, down: sLuluDown },
+	    actions: [global.actionLibrary.fraco, global.actionLibrary.defense, global.actionLibrary.forte, global.actionLibrary.Normal, global.actionLibrary.regeneracao],
+	    isDefending: false // Adiciona a variável isDefending e define como falso por padrão
+}
+
 	,
 	{
 		name: "Questy",
-		hp: 18,
+		hp: 28,
 		hpMax: 44,
 		mp: 20,
 		mpMax: 30,
 		strength: 4,
 		sprites : { idle: sQuestyIdle, attack: sQuestyCast, cast: sQuestyCast, down: sQuestyDown},
-		actions : []
+		actions : [global.actionLibrary.fraco, global.actionLibrary.ice]
 	}
 ]
 
@@ -32,17 +179,24 @@ global.enemies =
 	slimeG: 
 	{
 		name: "Slime",
-		hp: 30,
-		hpMax: 30,
+		hp: 50,
+		hpMax: 50,
 		mp: 0,
 		mpMax: 0,
 		strength: 5,
 		sprites: { idle: sSlime, attack: sSlimeAttack},
-		actions: [],
+		actions: [global.actionLibrary.fraco, global.actionLibrary.defense, global.actionLibrary.forte, global.actionLibrary.Normal, global.actionLibrary.regeneracaoboss],
 		xpValue : 15,
 		AIscript : function()
 		{
-			//AI do inimigo
+			//Ataque random
+			var _action = actions[0];
+			var _possibleTargets = array_filter(oBattle.partyUnits, function(_unit, _index)
+			{
+				return (_unit.hp > 0);
+			});
+			var _target = _possibleTargets[irandom(array_length(_possibleTargets)-1)];
+			return [_action, _target];
 		}
 	}
 	,
@@ -55,17 +209,20 @@ global.enemies =
 		mpMax: 0,
 		strength: 4,
 		sprites: { idle: sBat, attack: sBatAttack},
-		actions: [],
+		actions: [global.actionLibrary.Normal],
 		xpValue : 18,
 		AIscript : function()
 		{
-			//AI do inimigo
+			//Ataque random
+			var _action = actions[0];
+			var _possibleTargets = array_filter(oBattle.partyUnits, function(_unit, _index)
+			{
+				return (_unit.hp > 0);
+			});
+			var _target = _possibleTargets[irandom(array_length(_possibleTargets)-1)];
+			return [_action, _target];
 		}
-		}
+		
 	}
 
-
-
-
-
-
+}

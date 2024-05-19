@@ -6,3 +6,4 @@ event_inherited();
 
 
 image_xscale = -1; // configuração para que eles fiquem do lado certp da tela de batalha
+

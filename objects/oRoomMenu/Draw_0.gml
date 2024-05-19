@@ -12,7 +12,7 @@ draw_set_valign(fa_center);
 
 // Tocar o som apenas uma vez
 if (!menuSoundPlayed) {
-    audio_play_sound(sndMenu, 5, true); // Reproduz o som 'sndMenu' no volume 1 e em loop
+    audio_play_sound(sndMenu, 5, true);
     menuSoundPlayed = true;
 }
 
@@ -26,9 +26,9 @@ for (var i = 0; i < op_max; i++) {
         index = i;
         show_debug_message(index);
 
-        // Verifique se a opção mudou
+       
         if (index != previousIndex) {
-            // Tocar o som da nova opção
+            
             switch (index) {
                 case 0:
                     audio_play_sound(sndClick, 3, false);
@@ -42,9 +42,9 @@ for (var i = 0; i < op_max; i++) {
                 case 3:
                     audio_play_sound(sndClick, 3, false);
                     break;
-                // Adicione mais casos conforme necessário
+               
             }
-            // Atualizar a opção anterior
+           
             previousIndex = index;
         }
 
@@ -53,10 +53,10 @@ for (var i = 0; i < op_max; i++) {
                 game_end();
             }
             if (index == 0) {
-                audio_stop_sound(sndMenu); // Para a reprodução do som 'sndMenu'
-                instance_create_depth(0, 0, 0, otransition); // Cria o objeto de transição
-                otransition.transitioning = true; // Inicia a transição
-                otransition.nextRoom = room_next(room); // Define a próxima sala
+                audio_stop_sound(sndMenu); 
+                instance_create_depth(0, 0, 0, otransition); 
+                otransition.transitioning = true; 
+                otransition.nextRoom = room_next(room); 
             }
         }
     } else {

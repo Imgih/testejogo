@@ -65,7 +65,6 @@
     {"id":{"name":"oPlayer","path":"objects/oPlayer/oPlayer.yy",},},
     {"id":{"name":"oRoomMenu","path":"objects/oRoomMenu/oRoomMenu.yy",},},
     {"id":{"name":"oSlime","path":"objects/oSlime/oSlime.yy",},},
-    {"id":{"name":"oSound","path":"objects/oSound/oSound.yy",},},
     {"id":{"name":"oVictoryScreen","path":"objects/oVictoryScreen/oVictoryScreen.yy",},},
     {"id":{"name":"oVovo","path":"objects/oVovo/oVovo.yy",},},
     {"id":{"name":"Menu","path":"rooms/Menu/Menu.yy",},},

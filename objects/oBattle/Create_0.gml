@@ -114,22 +114,22 @@ function BeginAction(_user, _action, _targets) {
     currentAction = _action;
     currentTargets = _targets;
     
-    // Verificar se o usuário é um personagem controlado pelo jogador e se a ação é "Fraco"
+    
     if (_user.object_index == oBattleUnitPC && _action.name == "Fraco") {
-        // Recarregar MP em 3 unidades
+        
         _user.mp += 3;
         if (_user.mp > _user.mpMax) _user.mp = _user.mpMax; // Garantir que o MP não ultrapasse o máximo
     } else if (_user.object_index == oBattleUnitPC && _action.name != "Defend") {
-        // Verificar se o MP é suficiente para a ação
+        
         if (_action.mpCost > _user.mp) {
             battleText = "MP insuficiente!";
-            battleState = BattleStateSelectAction; // Voltar para a seleção de ação
-            exit; // Sair da função
+            battleState = BattleStateSelectAction;
+            exit; 
         }
         
-        // Reduzir MP
+      
         _user.mp -= _action.mpCost;
-        if (_user.mp < 0) _user.mp = 0; // Garantir que o MP não seja negativo
+        if (_user.mp < 0) _user.mp = 0; 
     }
     
     // Se a ação não for "Defend", continuar com o processo de execução da ação
@@ -184,13 +184,13 @@ function BattleStatePerformAction() {
 
 global.battleTrigger = noone;
 
-// Função para iniciar a batalha (chame isso quando a batalha começar)
+// Função para iniciar a batalha 
 function StartBattle(_collisionObject) {
     global.battleTrigger = _collisionObject;
-    // Outras lógicas de inicialização da batalha...
-    instance_deactivate_all(true); // Desativa todas as instâncias
-    instance_activate_object(oBattle); // Ativa a instância de batalha
-    oBattle.active = true; // Garantir que a batalha esteja ativa
+  
+    instance_deactivate_all(true); 
+    instance_activate_object(oBattle); 
+    oBattle.active = true; 
 }
 
 // Função para verificar vitória e derrota
@@ -220,20 +220,17 @@ function BattleStateVictoryCheck() {
 }
 
 function EndBattle() {
-    // Lógica de finalização da batalha, como recompensas e experiência
-    // ...
-
-    // Remover o objeto de colisão que iniciou a batalha
+ 
     if (instance_exists(global.battleTrigger)) {
         instance_destroy(global.battleTrigger);
     }
 
     // Restaurar o estado do jogo
-  instance_deactivate_all(false);
+  instance_deactivate_all(oBattle);
    // Reativa todas as instâncias
 
     // Fechar a tela de combate e voltar ao mapa
-    instance_destroy(oBattle); // Ou outra lógica específica para fechar a tela de combate
+    instance_destroy(oBattle); 
 }
 
 // Função para progressão do turno
@@ -270,10 +267,9 @@ function BattleStateTurnProgression() {
 function ApplyDamage(target, damage) {
     // Verifica se o alvo está defendendo
     if (target.defendingTurn) {
-        // Mitiga todo o dano
+        
         damage = 0;
-        // Alternativamente, você pode reduzir o dano pela metade ou outro fator
-        // damage = damage / 2;
+        ;
     }
     target.hp -= damage;
     if (target.hp < 0) target.hp = 0;

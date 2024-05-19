@@ -3,7 +3,7 @@ global.actionLibrary =
 	fraco: 
 	{
 		name : "Fraco",
-		description : "{0} attacks!",
+		description : "{0} atacou!",
 		subMenu : -1,
 		targetRequired: true,
 		targetEnemyByDefault : true,
@@ -20,7 +20,7 @@ global.actionLibrary =
 	Normal: 
 	{
 		name : "Normal",
-		description : "{0} attacks!",
+		description : "{0} atacou!",
 		subMenu : -1,
 		mpCost: 10,
 		targetRequired: true,
@@ -38,7 +38,7 @@ global.actionLibrary =
 	forte: 
 	{
 		name : "Forte",
-		description : "{0} ataca!",
+		description : "{0} atacou!",
 		subMenu : -1,
 		mpCost: 20,
 		targetRequired: true,
@@ -94,20 +94,20 @@ global.actionLibrary =
 	    name: "Cura",
 	    description: "{0} recupera HP!",
 	    subMenu: -1,
-	    mpCost: 10, // Ou o custo de MP desejado
-	    targetRequired: false, // Não requer seleção de alvo
-	    targetEnemyByDefault: false, // Não é uma ação que visa inimigos
-	    targetAll: MODE.NEVER, // Não é uma ação que afeta todos os alvos
-	    userAnimation: "cast", // Animação do usuário
-	    effectSprite: sAttackCure, // Sprite de efeito, se desejar
-	    effectOnTarget: MODE.NEVER, // Não afeta o alvo diretamente
+	    mpCost: 10, 
+	    targetRequired: false, 
+	    targetEnemyByDefault: false, 
+	    targetAll: MODE.NEVER,
+	    userAnimation: "cast", 
+	    effectSprite: sAttackCure, 
+	    effectOnTarget: MODE.NEVER,
 	    func: function(_user, _targets) {
-	        // Calcula a quantidade de regeneração (10% a 25% da HP máxima)
+	    
 	        var regenPercent = random_range(0.1, 0.25);
 	        var regenAmount = ceil(_user.hpMax * regenPercent);
-	        // Adiciona a quantidade de regeneração à HP atual do usuário
+	       
 	        _user.hp += regenAmount;
-	        // Garante que a HP não exceda a HP máxima
+	 
 	        if (_user.hp > _user.hpMax) _user.hp = _user.hpMax;
 		}
 	},
@@ -115,20 +115,18 @@ global.actionLibrary =
 	    name: "Cura",
 	    description: "{0} recupera HP!",
 	    subMenu: -1,
-	    mpCost: 10, // Ou o custo de MP desejado
-	    targetRequired: false, // Não requer seleção de alvo
-	    targetEnemyByDefault: false, // Não é uma ação que visa inimigos
-	    targetAll: MODE.NEVER, // Não é uma ação que afeta todos os alvos
-	    userAnimation: "cast", // Animação do usuário
-	    effectSprite: sAttackCure, // Sprite de efeito, se desejar
-	    effectOnTarget: MODE.NEVER, // Não afeta o alvo diretamente
+	    mpCost: 10,
+	    targetRequired: false,
+	    targetEnemyByDefault: false, 
+	    targetAll: MODE.NEVER, 
+	    userAnimation: "cast", 
+	    effectSprite: sAttackCure, 
+	    effectOnTarget: MODE.NEVER, 
 	    func: function(_user, _targets) {
-	        // Calcula a quantidade de regeneração (10% a 25% da HP máxima)
 			var regenPercent = random_range(0.05, 0.1);
 	        var regenAmount = ceil(_user.hpMax * regenPercent);
-	        // Adiciona a quantidade de regeneração à HP atual do usuário
+	        
 	        _user.hp += regenAmount;
-	        // Garante que a HP não exceda a HP máxima
 	        if (_user.hp > _user.hpMax) _user.hp = _user.hpMax;
 		}
 	}
@@ -157,7 +155,7 @@ global.party =
 	    strength: 6,
 	    sprites: { idle: sLuluIdle, attack: sLuluAttack, defend: sLuluDefend, down: sLuluDown },
 	    actions: [global.actionLibrary.fraco, global.actionLibrary.defense, global.actionLibrary.forte, global.actionLibrary.Normal, global.actionLibrary.regeneracao],
-	    isDefending: false // Adiciona a variável isDefending e define como falso por padrão
+	    isDefending: false 
 }
 
 	,
